@@ -33,7 +33,6 @@ class Repeat(nn.Module):
             x_rec = self.conv(x + x_rec)
         return x_rec
 
-
 class RR_Conv(nn.Module):
     def __init__(self, ch_in, ch_out):
         super(RR_Conv, self).__init__()
