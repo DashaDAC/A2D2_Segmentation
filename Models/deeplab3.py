@@ -47,6 +47,13 @@ class RR_Conv(nn.Module):
         return input_img + conv_input_img
 
 class Atrous_Conv(nn.Module):
+    def __init__(self, ch_out):
+        super(Atrous_Conv, self).__init__()
+        self.pooling = nn.Sequential(
+            nn.AvgPool2d(kernel_size=2, stride=2),
+            nn.BatchNorm2d(ch_out),
+            nn.ReLU(inplace=True))
+
 
 
     ############
