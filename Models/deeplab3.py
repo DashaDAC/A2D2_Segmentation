@@ -46,6 +46,7 @@ class RR_Conv(nn.Module):
         conv_input_img = self.Repeat_block(input_img)
         return input_img + conv_input_img
 
+# in process
 class Atrous_Conv(nn.Module):
     def __init__(self, ch_out):
         super(Atrous_Conv, self).__init__()
