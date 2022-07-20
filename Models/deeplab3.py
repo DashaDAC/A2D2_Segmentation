@@ -50,10 +50,46 @@ class RR_Conv(nn.Module):
 class Atrous_Conv(nn.Module):
     def __init__(self, ch_out):
         super(Atrous_Conv, self).__init__()
+
         self.pooling = nn.Sequential(
             nn.AvgPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(ch_out, ch_out, kernel_size=3, stride=1, padding=1, bias=True),
             nn.BatchNorm2d(ch_out),
-            nn.ReLU(inplace=True))
+            nn.ReLU(inplace=True),
+            nn.Upsample(scale_factor=2) #?
+            )
+
+        self.a_conv_1 = nn.Sequential(
+            nn.Conv2d(ch_out, ch_out, kernel_size=1, stride=1, padding=1, bias=True),
+            nn.BatchNorm2d(ch_out),
+            nn.ReLU(inplace=True)
+            )
+
+        self.a_conv_6 = nn.Sequential(
+            nn.Conv2d(ch_out, ch_out, kernel_size=3, stride=6, padding=1, bias=True),
+            nn.BatchNorm2d(ch_out),
+            nn.ReLU(inplace=True)
+            )
+
+        self.a_conv_12 = nn.Sequential(
+            nn.Conv2d(ch_out, ch_out, kernel_size=3, stride=12, padding=1, bias=True),
+            nn.BatchNorm2d(ch_out),
+            nn.ReLU(inplace=True)
+            )
+
+        self.a_conv_18 = nn.Sequential(
+            nn.Conv2d(ch_out, ch_out, kernel_size=3, stride=18, padding=1, bias=True),
+            nn.BatchNorm2d(ch_out),
+            nn.ReLU(inplace=True)
+            )
+
+    def forward(self, x):
+        y = self.pooling(x)
+        y_1 = self.a_conv_1(x)
+        y_6 = self.a_conv_6(x)
+        y_12 = self.a_conv_12(x)
+        y_18 = self.a_conv_18(x)
+        return y+y_1+y_6+y_12+y_18
 
 
 
