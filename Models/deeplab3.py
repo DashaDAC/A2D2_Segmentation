@@ -83,13 +83,15 @@ class Atrous_Conv(nn.Module):
             nn.ReLU(inplace=True)
             )
 
-    def forward(self, x):
+    def forward(self, x, ch_out):
         y = self.pooling(x)
         y_1 = self.a_conv_1(x)
         y_6 = self.a_conv_6(x)
         y_12 = self.a_conv_12(x)
         y_18 = self.a_conv_18(x)
-        return y+y_1+y_6+y_12+y_18
+        concat = torch.cat([y, y_1, y_6, y_12, y_18],  dim=4) # number of dim =  4?
+        end_concat = self.a_conv_1(concat)
+        return end_concat
 
 
 
