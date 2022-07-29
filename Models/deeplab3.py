@@ -105,6 +105,7 @@ class DeepLabV3(nn.Module):
         self.MaxPool = nn.MaxPool2d(kernel_size=2, stride=2)
 
         self.channel_1 = 64
+
         self.channel_2 = 2 * self.channel_1
         self.channel_3 = 2 * self.channel_2
         self.channel_4 = 2 * self.channel_3
